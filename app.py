@@ -2,7 +2,7 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.offline import plot
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_from_directory
 import os
 
 app = Flask(__name__)
@@ -41,12 +41,14 @@ def display3D_line():
         margin=dict(t=0,r=0,b=0,l=0)
     )
     plot(fig, filename='./templates/line3D.html', config=config, show_link=False, auto_open=False)
+    
     return render_template('line3D.html')
 
 
 @app.route('/show-latest', methods=["GET"])
 def show_latest():
-    return render_template('line3D.html')
+    return send_from_directory('./templates/','line3D.html')
+    #return render_template('line3D.html')
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 33508))
